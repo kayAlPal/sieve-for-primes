@@ -13,11 +13,11 @@ import Foundation
 
 enum GameNumberState {
     
-    case Normal //white
-    case SelectedPrime //yellow, primes found by user
-    case SelectedComposite //red, composites found by user are red
-    case Removed //gray, removed composites after user finds all composites in 
-    case Unit
+    case normal //white
+    case selectedPrime //yellow, primes found by user
+    case selectedComposite //red, composites found by user are red
+    case removed //gray, removed composites after user finds all composites in 
+    case unit
    
 }
 
@@ -30,9 +30,9 @@ struct GameNumber: Equatable {
 
         value = number
         if value == 1 {
-            state = .Unit
+            state = .unit
         } else {
-            state =  .Normal
+            state =  .normal
         }
         
     }

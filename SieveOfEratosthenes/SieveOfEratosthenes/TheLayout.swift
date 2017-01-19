@@ -12,11 +12,11 @@ class TheLayout: UICollectionViewLayout {
     
     func collectionView(_ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-            let screenSize: CGRect = UIScreen.mainScreen().bounds
+        sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize{
+            let screenSize: CGRect = UIScreen.main.bounds
             let screenWidth: CGFloat = screenSize.width;
             let cellWidth = screenWidth / 13.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
-            let size: CGSize = CGSizeMake(cellWidth, cellWidth);
+            let size: CGSize = CGSize(width: cellWidth, height: cellWidth);
             
             return size;
     }

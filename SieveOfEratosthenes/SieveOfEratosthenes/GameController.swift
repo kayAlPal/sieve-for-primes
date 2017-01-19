@@ -9,9 +9,9 @@
 import Foundation
 
 enum GameState {
-    case FindLowestPrime(lowestPrime: Int)
-    case RemoveComposites(currentPrime: Int)
-    case Finish(lastPrime: Int?)
+    case findLowestPrime(lowestPrime: Int)
+    case removeComposites(currentPrime: Int)
+    case finish(lastPrime: Int?)
 }
 
 class GameController {
@@ -30,7 +30,7 @@ class GameController {
     //MARK: Initialization
     init(theVC: ViewController) {
       
-        state = .FindLowestPrime(lowestPrime: 2)
+        state = .findLowestPrime(lowestPrime: 2)
         ourVC = theVC
         if let size = ourVC!.sizeOfCollection {
             sizeOfCollection = size
@@ -42,22 +42,22 @@ class GameController {
     }
     
     //MARK: GameSetUp
-    func userSelectedNumber(gameNumber: GameNumber) {
+    func userSelectedNumber(_ gameNumber: GameNumber) {
         switch state {
 
-        case .FindLowestPrime(let lowestPrime):
+        case .findLowestPrime(let lowestPrime):
             if gameNumber.value == lowestPrime {
                 selectPrime(gameNumber)
-                state = .RemoveComposites(currentPrime: lowestPrime)
+                state = .removeComposites(currentPrime: lowestPrime)
                 ourVC!.callAlertControllerForMultiples(lowestPrime)
             } else {
                 ourVC!.vibrateThePhone()
             }
-        case .RemoveComposites(let currentPrime):
+        case .removeComposites(let currentPrime):
             selectComposite(currentPrime, gameNumber: gameNumber)
             break
         
-        case .Finish:
+        case .finish:
             //segue to UserTableViewController
             break
         }
@@ -65,7 +65,7 @@ class GameController {
 
     }
     
-    func userSelectedNextPrime(gameNumber: GameNumber) {
+    func userSelectedNextPrime(_ gameNumber: GameNumber) {
         
     }
     
@@ -74,52 +74,52 @@ class GameController {
         print("checking state")
         switch state {
             
-        case .FindLowestPrime(let lowestPrime):
+        case .findLowestPrime(let lowestPrime):
             print("FindlowestPrime")
             return
             
-        case .RemoveComposites(let currentPrime):
+        case .removeComposites(let currentPrime):
             print("removeComposites")
             if userSelectedAllMultiples(currentPrime) {
                 for index in selectedIndices {
                     print("hello")
-                    gameNumbers[index].state = .Removed
+                    gameNumbers[index].state = .removed
                     print(index)
                 }
             if isLastPrime(currentPrime) {
                 highlightThePrimes()
-                state = .Finish(lastPrime: theLastPrime())
+                state = .finish(lastPrime: theLastPrime())
                 sizeOfCollection += 100
                 endTheGame()
                 return
             }
             selectedIndices.removeAll()
-            state = .FindLowestPrime(lowestPrime: findNextPrime(currentPrime))
+            state = .findLowestPrime(lowestPrime: findNextPrime(currentPrime))
             ourVC!.callAlertControllerForNextPrime()
             }
-        case .Finish:
+        case .finish:
             print("finish")
             return
         }
     }
     
-    func findCorrespondingGameNumber(gameNumber: GameNumber) ->Int? {
-        return gameNumbers.indexOf(gameNumber)
+    func findCorrespondingGameNumber(_ gameNumber: GameNumber) ->Int? {
+        return gameNumbers.index(of: gameNumber)
     }
     
-    func selectPrime(gameNumber: GameNumber) {
+    func selectPrime(_ gameNumber: GameNumber) {
         if let currentIndex = findCorrespondingGameNumber(gameNumber) {
-            gameNumbers[currentIndex].state = .SelectedPrime
+            gameNumbers[currentIndex].state = .selectedPrime
         }
     }
     
-    func selectComposite(forPrime: Int, gameNumber: GameNumber) {
+    func selectComposite(_ forPrime: Int, gameNumber: GameNumber) {
         switch state {
-        case .FindLowestPrime(let lowestPrime):
+        case .findLowestPrime(let lowestPrime):
                 return
-        case .RemoveComposites(let currentPrime):
+        case .removeComposites(let currentPrime):
             switch gameNumber.state {
-            case .Removed:
+            case .removed:
                 if gameNumber.value % currentPrime != 0 {
                     print("error")
                     ourVC!.vibrateThePhone()
@@ -128,12 +128,12 @@ class GameController {
                 }
                 
                 if let currentIndex = findCorrespondingGameNumber(gameNumber) {
-                    gameNumbers[currentIndex].state = .SelectedComposite
+                    gameNumbers[currentIndex].state = .selectedComposite
                     selectedIndices.append(currentIndex)
                     print("Current Index \(currentIndex)")
                     print(selectedIndices)
                 }
-            case .Normal:
+            case .normal:
                 
                 if gameNumber.value % currentPrime != 0 {
                 print("error")
@@ -143,42 +143,42 @@ class GameController {
                 }
                 
                 if let currentIndex = findCorrespondingGameNumber(gameNumber) {
-                gameNumbers[currentIndex].state = .SelectedComposite
+                gameNumbers[currentIndex].state = .selectedComposite
                 selectedIndices.append(currentIndex)
                 print("Current Index \(currentIndex)")
                 print(selectedIndices)
                 }
-            case .SelectedPrime:
+            case .selectedPrime:
                 return
-            case .SelectedComposite:
+            case .selectedComposite:
                 if let currentIndex = findCorrespondingGameNumber(gameNumber) {
-                    gameNumbers[currentIndex].state = .Normal
-                    if let indexToBeDeleted = selectedIndices.indexOf(currentIndex){
-                        selectedIndices.removeAtIndex(indexToBeDeleted)
+                    gameNumbers[currentIndex].state = .normal
+                    if let indexToBeDeleted = selectedIndices.index(of: currentIndex){
+                        selectedIndices.remove(at: indexToBeDeleted)
                     }
                 }
                 return
-            case .Unit:
+            case .unit:
                 return
                 
         }
 
-        case .Finish:
+        case .finish:
             return
         }
     }
     
     func endTheGame() {
         switch state {
-        case .Finish(let lastPrime):
+        case .finish(let lastPrime):
             ourVC?.sizeOfCollection = sizeOfCollection
             ourVC?.highestPrime = lastPrime
             ourVC?.callAlertControllerForFinish()
-        case .FindLowestPrime(let lowestPrime):
+        case .findLowestPrime(let lowestPrime):
             ourVC?.sizeOfCollection = sizeOfCollection
             ourVC?.highestPrime = lowestPrime
             ourVC?.performSegueToUserTableViewController()
-        case .RemoveComposites(let currentPrime):
+        case .removeComposites(let currentPrime):
             ourVC?.sizeOfCollection = sizeOfCollection
             ourVC?.highestPrime = currentPrime
             ourVC?.performSegueToUserTableViewController()
@@ -186,7 +186,7 @@ class GameController {
     }
     
     //MARK: MathLogic
-    func isPrime(currentNumber: Int) -> Bool {
+    func isPrime(_ currentNumber: Int) -> Bool {
         let possiblePrime = currentNumber
         let possiblePrimeFloat: Float = Float(possiblePrime)
         let endOfRange: Int = Int(sqrt(possiblePrimeFloat))
@@ -208,7 +208,7 @@ class GameController {
         return true
     }
     
-    func findNextPrime(forPrime: Int) ->Int {
+    func findNextPrime(_ forPrime: Int) ->Int {
         for i in (forPrime + 1)...sizeOfCollection {
             if isPrime(i) {
                 return i
@@ -217,15 +217,26 @@ class GameController {
         return forPrime
     }
     
-    func userSelectedAllMultiples(forPrime: Int) ->Bool {
+    func userSelectedAllMultiples(_ forPrime: Int) ->Bool {
         print("userSelectedAllMultiples")
         var numberOfErrors = 0
-        for var i = (forPrime * 2); i <= sizeOfCollection; i += forPrime {
-            
-            if numberIsNotSelected(gameNumbers[i - 1]) && !selectedIndices.contains(i - 1) {
-                ++numberOfErrors
+        for i in stride(from: (forPrime * 2), to: sizeOfCollection, by: forPrime) {
+            if (numberIsNotSelected(gameNumbers[i - 1]) && !selectedIndices.contains(i - 1)) {
+                numberOfErrors = numberOfErrors + 1
             }
         }
+//        for i in (forPrime * 2)...sizeOfCollection {
+//            if (numberIsNotSelected(gameNumbers[i - 1]) && !selectedIndices.contains(i - 1)) {
+//                numberOfErrors = numberOfErrors + 1
+//            }
+//
+//        }
+//        for var i = (forPrime * 2); i <= sizeOfCollection; i += forPrime {
+//            
+//            if numberIsNotSelected(gameNumbers[i - 1]) && !selectedIndices.contains(i - 1) {
+//                numberOfErrors += 1
+//            }
+//        }
         if numberOfErrors > 0 {
             ourVC!.callTheAlertControllerForMissedMultiple(numberOfErrors)
             return false
@@ -235,7 +246,7 @@ class GameController {
         }
     }
     
-    func isLastPrime(forPrime: Int) -> Bool {
+    func isLastPrime(_ forPrime: Int) -> Bool {
         let sizeOfCollectionFloat: Float = Float(sizeOfCollection)
         let highestPossible: Int = Int(sqrt((sizeOfCollectionFloat)))
         let nextPrime = findNextPrime(forPrime)
@@ -243,16 +254,16 @@ class GameController {
         return nextPrime > highestPossible
     }
     
-    func numberIsNotSelected(gameNumber: GameNumber) -> Bool {
+    func numberIsNotSelected(_ gameNumber: GameNumber) -> Bool {
 
-        return gameNumber.state == .Normal
+        return gameNumber.state == .normal
     }
     
     func highlightThePrimes() {
         for remainingNumber in gameNumbers {
             if numberIsNotSelected(remainingNumber) {
                 if let index = findCorrespondingGameNumber(remainingNumber) {
-                    gameNumbers[index].state = .SelectedPrime
+                    gameNumbers[index].state = .selectedPrime
                     print("\(gameNumbers[index].state)")
                 }
 
@@ -263,7 +274,7 @@ class GameController {
     
     func theLastPrime() -> Int {
         
-        for (var i = sizeOfCollection; i > 0; i--) {
+        for i in (1...sizeOfCollection).reversed() {
             if isPrime(i) {
                 print("returning \(i)")
                 return i

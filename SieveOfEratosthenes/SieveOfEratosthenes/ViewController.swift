@@ -32,18 +32,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
 
     }
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        let value = UIInterfaceOrientation.LandscapeLeft.rawValue
-        UIDevice.currentDevice().setValue(value, forKey: "orientation")
+        let value = UIInterfaceOrientation.landscapeLeft.rawValue
+        UIDevice.current.setValue(value, forKey: "orientation")
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
   
         callAlertControllerForNextPrime()
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 
@@ -55,13 +55,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     // MARK: UICollectionViewDataSource
     
-     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+     func numberOfSections(in collectionView: UICollectionView) -> Int {
         
         return 1
     }
     
     
-     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
        
         if let size = sizeOfCollection {
             return size
@@ -71,30 +71,30 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
     }
     
-     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
     
         if let gameNumber = ourGC?.gameNumbers[indexPath.row] {
             cell.takeThisGameNumber(gameNumber)
         }
-        cell.layer.borderColor = UIColor.grayColor().CGColor
+        cell.layer.borderColor = UIColor.gray.cgColor
         cell.layer.borderWidth = 1
         
         return cell
     }
     
-    func collectionView(collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize{
-            let screenSize: CGRect = UIScreen.mainScreen().bounds
+    func collectionView(_ collectionView: UICollectionView, layout : UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
+            let screenSize: CGRect = UIScreen.main.bounds
             let screenWidth: CGFloat = screenSize.width;
             let cellWidth = screenWidth / 12.0; //Replace the divisor with the column count requirement. Make sure to have it in float.
-            let size: CGSize = CGSizeMake(cellWidth, cellWidth);
+            let size: CGSize = CGSize(width: cellWidth, height: cellWidth);
             
             return size;
     }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        let cell = collectionView.cellForItemAtIndexPath(indexPath) as? CollectionViewCell
+        let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell
         if let gameNumber = cell?.gameNumber {
             ourGC?.userSelectedNumber(gameNumber)
         }
@@ -103,50 +103,50 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     //MARK: GameSetUp
     
-    func startTheGame(alert: UIAlertAction! = nil) {
+    func startTheGame(_ alert: UIAlertAction! = nil) {
         
     }
     
-    func callTheAlertControllerForMissedMultiple(numberMissing: Int) {
-        let ac = UIAlertController(title: title, message: "Oops. You need to find \(numberMissing) more.", preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .Default, handler: returnToTheGame))
-        presentViewController(ac, animated: true, completion: nil)
+    func callTheAlertControllerForMissedMultiple(_ numberMissing: Int) {
+        let ac = UIAlertController(title: title, message: "Oops. You need to find \(numberMissing) more.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: returnToTheGame))
+        present(ac, animated: true, completion: nil)
         
     }
     
     func callAlertControllerForNextPrime() {
         
-        let ac = UIAlertController(title: title, message: "Please select the lowest prime number. Remember 1 is neither prime nor composite. It is a special case", preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .Default, handler: startTheGame))
-        presentViewController(ac, animated: true, completion: nil)
+        let ac = UIAlertController(title: title, message: "Please select the lowest prime number. Remember 1 is neither prime nor composite. It is a special case", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: startTheGame))
+        present(ac, animated: true, completion: nil)
     }
     
-    func callAlertControllerForMultiples(thePrime: Int) {
-        let ac = UIAlertController(title: title, message: "Awesome! You found the prime number. Now remove its multiples and shake the phone. They aren't prime because they can all be put into boxes with rows of \(thePrime). Keep adding \(thePrime) to itself until the end.", preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "Continue", style: .Default, handler: startTheGame))
-        presentViewController(ac, animated: true, completion: nil)
+    func callAlertControllerForMultiples(_ thePrime: Int) {
+        let ac = UIAlertController(title: title, message: "Awesome! You found the prime number. Now remove its multiples and shake the phone. They aren't prime because they can all be put into boxes with rows of \(thePrime). Keep adding \(thePrime) to itself until the end.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: startTheGame))
+        present(ac, animated: true, completion: nil)
     }
     
     func callAlertControllerForFinish() {
-        let ac = UIAlertController(title: title, message: "Amazing! You have found all the prime numbers.", preferredStyle: .Alert)
-        ac.addAction(UIAlertAction(title: "Look at the numbers", style: .Default, handler: startTheGame))
-        ac.addAction(UIAlertAction(title: "Finish", style: .Default, handler: performSegueToUserTableViewController))
-        presentViewController(ac, animated: true, completion: nil)
+        let ac = UIAlertController(title: title, message: "Amazing! You have found all the prime numbers.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Look at the numbers", style: .default, handler: startTheGame))
+        ac.addAction(UIAlertAction(title: "Finish", style: .default, handler: performSegueToUserTableViewController))
+        present(ac, animated: true, completion: nil)
     }
     
-    func returnToTheGame(alert: UIAlertAction! = nil) {
+    func returnToTheGame(_ alert: UIAlertAction! = nil) {
         
     }
     
     //MARK: MotionDetection
     
-    override func canBecomeFirstResponder() -> Bool {
+    override var canBecomeFirstResponder : Bool {
         return true
     }
     
     
-    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
-        if motion == .MotionShake {
+    override func motionEnded(_ motion: UIEventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
             ourGC!.userShookPhone()
         }
         print("shaking")
@@ -163,8 +163,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     //MARK: Navigation
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destVC = segue.destinationViewController as? UserTableViewController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destVC = segue.destination as? UserTableViewController
         if let prime = highestPrime {
             destVC?.currentUser?.highestPrime = prime
             print("PFS highestPrime \(prime)")
@@ -174,9 +174,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
     }
     
-    func performSegueToUserTableViewController(alert: UIAlertAction! = nil) {
+    func performSegueToUserTableViewController(_ alert: UIAlertAction! = nil) {
         
-        performSegueWithIdentifier("UnwindToFinish", sender: self)
+        performSegue(withIdentifier: "UnwindToFinish", sender: self)
         
     }
  

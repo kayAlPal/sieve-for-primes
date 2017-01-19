@@ -35,7 +35,7 @@ class User: NSObject, NSCoding {
     var sizeOfCollection: Int
     
     enum Gender: Int {
-        case Boy = 0, Girl
+        case boy = 0, girl
         
         //        init() {
         //            self = .Boy
@@ -45,8 +45,8 @@ class User: NSObject, NSCoding {
     
     // MARK: Archiving Paths
     
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-    static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("theUsers")
+    static let DocumentsDirectory = FileManager().urls(for: .documentDirectory, in: .userDomainMask).first!
+    static let ArchiveURL = DocumentsDirectory.appendingPathComponent("theUsers")
     
     
     
@@ -97,24 +97,24 @@ class User: NSObject, NSCoding {
     
     //MARK: NSCoding
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    func encode(with aCoder: NSCoder) {
         
-        aCoder.encodeObject(selfie, forKey: PropertyKey.selfieKey)
-        aCoder.encodeObject(name, forKey: PropertyKey.nameKey)
-        aCoder.encodeObject(highestPrime, forKey: PropertyKey.highestPrimeKey)
+        aCoder.encode(selfie, forKey: PropertyKey.selfieKey)
+        aCoder.encode(name, forKey: PropertyKey.nameKey)
+        aCoder.encode(highestPrime, forKey: PropertyKey.highestPrimeKey)
         //aCoder.encodeObject(fewestErrors, forKey: PropertyKey.fewestErrorsKey)
-        aCoder.encodeBool(isGirl, forKey: PropertyKey.isGirlKey)
-        aCoder.encodeInteger(sizeOfCollection, forKey: PropertyKey.sizeOfCollectionKey)
+        aCoder.encode(isGirl, forKey: PropertyKey.isGirlKey)
+        aCoder.encode(sizeOfCollection, forKey: PropertyKey.sizeOfCollectionKey)
     }
     
     convenience required init(coder aDecoder: NSCoder) {
         
-        let selfie = aDecoder.decodeObjectForKey(PropertyKey.selfieKey) as? UIImage
-        let name = aDecoder.decodeObjectForKey(PropertyKey.nameKey) as! String
-        let highestPrime = aDecoder.decodeObjectForKey(PropertyKey.highestPrimeKey) as? Int
+        let selfie = aDecoder.decodeObject(forKey: PropertyKey.selfieKey) as? UIImage
+        let name = aDecoder.decodeObject(forKey: PropertyKey.nameKey) as! String
+        let highestPrime = aDecoder.decodeObject(forKey: PropertyKey.highestPrimeKey) as? Int
         //let fewestErrors = aDecoder.decodeObjectForKey(PropertyKey.fewestErrorsKey)
-        let isGirl = aDecoder.decodeBoolForKey(PropertyKey.isGirlKey) as Bool
-        let sizeOfCollection = aDecoder.decodeIntegerForKey(PropertyKey.sizeOfCollectionKey) as Int
+        let isGirl = aDecoder.decodeBool(forKey: PropertyKey.isGirlKey) as Bool
+        let sizeOfCollection = aDecoder.decodeInteger(forKey: PropertyKey.sizeOfCollectionKey) as Int
         
         self.init(newPic: selfie, newName: name, girl: isGirl, highPrime: highestPrime, sizeOfCollection: sizeOfCollection)
         

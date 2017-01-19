@@ -12,7 +12,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var numberLabel: UILabel!
    
-    private(set) var gameNumber: GameNumber?
+    fileprivate(set) var gameNumber: GameNumber?
     
 //    enum NumberState {
 //        case Prime;
@@ -35,46 +35,46 @@ class CollectionViewCell: UICollectionViewCell {
 //        }
 //        return true
 //    }
-    func hexStringToUIColor (hex:String) -> UIColor {
-        var cString:String = hex.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet() as NSCharacterSet).uppercaseString
-        
-        
-        if ((cString.characters.count) != 6) {
-            return UIColor.grayColor()
+    func hexStringToUIColor(hex: String, alpha: Float) -> UIColor {
+        var cString: String = hex.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).uppercased()
+
+        if cString.characters.count != 6 {
+            return UIColor.gray
         }
-        
-        var rgbValue:UInt32 = 0
-        NSScanner(string: cString).scanHexInt(&rgbValue)
-        
+
+        var rgbValue: UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
             green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
-            alpha: CGFloat(1.0))
+            alpha: CGFloat(alpha))
     }
     
-    func takeThisGameNumber(gameNumber: GameNumber) {
+    func takeThisGameNumber(_ gameNumber: GameNumber) {
         numberLabel.text = "\(gameNumber.value)"
         
         switch gameNumber.state {
         
-        case .SelectedPrime:
-            backgroundColor = hexStringToUIColor("B2FFA8")
+        case .selectedPrime:
+            backgroundColor = hexStringToUIColor(hex: "B2FFA8", alpha: 1)
 //        case .SelectedComposite:
 //            backgroundColor = hexStringToUIColor("D4FFA8")
-        case .SelectedComposite:
-            backgroundColor = hexStringToUIColor("F5A8FF")
-        case .Removed:
+        case .selectedComposite:
+            backgroundColor = hexStringToUIColor(hex: "F5A8FF", alpha: 1)
+        case .removed:
             //backgroundColor = hexStringToUIColor("E4EFF5")
             //numberLabel.textColor = UIColor.grayColor()
-            backgroundColor = UIColor.whiteColor()
-            layer.borderColor = UIColor.whiteColor().CGColor
-            layer.borderWidth = 0
+            backgroundColor = UIColor.white
+            layer.borderColor = UIColor.white.cgColor
+            layer.borderWidth = 1
+            numberLabel.textColor = UIColor.lightGray
             
-        case .Normal:
-            backgroundColor = hexStringToUIColor("A8DDFF")
-        case .Unit:
-            backgroundColor = hexStringToUIColor("F7FCF2")
+        case .normal:
+            backgroundColor = hexStringToUIColor(hex: "A8DDFF", alpha: 1)
+        case .unit:
+            backgroundColor = hexStringToUIColor(hex: "F7FCF2", alpha: 1)
         }
         
         self.gameNumber = gameNumber
