@@ -11,6 +11,7 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var numberLabel: UILabel!
+    var shouldShake = false
    
     fileprivate(set) var gameNumber: GameNumber?
     
@@ -59,13 +60,20 @@ class CollectionViewCell: UICollectionViewCell {
         
         case .selectedPrime:
             backgroundColor = hexStringToUIColor(hex: "B2FFA8", alpha: 1)
+            layer.borderColor = UIColor.gray.cgColor
+            layer.borderWidth = 1
+            numberLabel.textColor = UIColor.black
 //        case .SelectedComposite:
 //            backgroundColor = hexStringToUIColor("D4FFA8")
         case .selectedComposite:
             backgroundColor = hexStringToUIColor(hex: "F5A8FF", alpha: 1)
+            layer.borderColor = UIColor.gray.cgColor
+            layer.borderWidth = 1
+            numberLabel.textColor = UIColor.black
         case .removed:
             //backgroundColor = hexStringToUIColor("E4EFF5")
             //numberLabel.textColor = UIColor.grayColor()
+            shouldShake = true
             backgroundColor = UIColor.white
             layer.borderColor = UIColor.white.cgColor
             layer.borderWidth = 1
@@ -73,10 +81,25 @@ class CollectionViewCell: UICollectionViewCell {
             
         case .normal:
             backgroundColor = hexStringToUIColor(hex: "A8DDFF", alpha: 1)
+            layer.borderColor = UIColor.gray.cgColor
+            layer.borderWidth = 1
+            numberLabel.textColor = UIColor.black
         case .unit:
             backgroundColor = hexStringToUIColor(hex: "F7FCF2", alpha: 1)
+            layer.borderColor = UIColor.gray.cgColor
+            layer.borderWidth = 1
+            numberLabel.textColor = UIColor.black
         }
         
         self.gameNumber = gameNumber
+    }
+
+    func shakeUpTheCells() {
+        if shouldShake {
+            UIView.animate(withDuration: 5) {
+                self.bounds = CGRect(x: self.bounds.origin.x + 20, y: self.bounds.origin.y, width: self.bounds.width, height: self.bounds.height)
+            }
+            shouldShake = false
+        }
     }
 }
