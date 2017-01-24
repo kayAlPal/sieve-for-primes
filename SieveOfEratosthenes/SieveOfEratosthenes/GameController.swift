@@ -81,9 +81,12 @@ class GameController {
         case .removeComposites(let currentPrime):
             print("removeComposites")
             if userSelectedAllMultiples(currentPrime) {
+                ourVC?.shakeTheSieve()
                 for index in selectedIndices {
                     print("hello")
+
                     gameNumbers[index].state = .removed
+        
                     print(index)
                 }
             if isLastPrime(currentPrime) {

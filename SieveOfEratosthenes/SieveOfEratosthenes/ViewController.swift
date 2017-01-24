@@ -8,8 +8,9 @@
 
 import UIKit
 import AudioToolbox
+import AVFoundation
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, AVAudioPlayerDelegate {
 
     //MARK: Properties
     
@@ -22,6 +23,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     var sizeOfCollection: Int? 
     var highestPrime: Int?
     var ourGC: GameController?
+
+
     
     
     override func viewDidLoad() {
@@ -47,10 +50,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         return true
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
 
 
     // MARK: UICollectionViewDataSource
@@ -76,10 +76,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
         if let gameNumber = ourGC?.gameNumbers[indexPath.row] {
             cell.takeThisGameNumber(gameNumber)
+            cell.shakeUpTheCells()
         }
-        cell.layer.borderColor = UIColor.gray.cgColor
-        cell.layer.borderWidth = 1
-        
+//        cell.layer.borderColor = UIColor.gray.cgColor
+//        cell.layer.borderWidth = 1
+
         return cell
     }
     
@@ -93,6 +94,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //playTheSound()
+        play(for: "Awesome", type: "m4a")
         
         let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell
         if let gameNumber = cell?.gameNumber {
@@ -115,19 +118,21 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func callAlertControllerForNextPrime() {
-        
+        return
         let ac = UIAlertController(title: title, message: "Please select the lowest prime number. Remember 1 is neither prime nor composite. It is a special case", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: startTheGame))
         present(ac, animated: true, completion: nil)
     }
     
     func callAlertControllerForMultiples(_ thePrime: Int) {
+        return
         let ac = UIAlertController(title: title, message: "Awesome! You found the prime number. Now remove its multiples and shake the phone. They aren't prime because they can all be put into boxes with rows of \(thePrime). Keep adding \(thePrime) to itself until the end.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Continue", style: .default, handler: startTheGame))
         present(ac, animated: true, completion: nil)
     }
     
     func callAlertControllerForFinish() {
+        return
         let ac = UIAlertController(title: title, message: "Amazing! You have found all the prime numbers.", preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "Look at the numbers", style: .default, handler: startTheGame))
         ac.addAction(UIAlertAction(title: "Finish", style: .default, handler: performSegueToUserTableViewController))
@@ -157,10 +162,79 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //        }
     
     }
+
+    func shakeTheSieve() {
+        playTheSound()
+        for cell in self.collectionView.visibleCells {
+            if let indexPath = self.collectionView.indexPath(for: cell) {
+                if let cell = collectionView.cellForItem(at: indexPath) as? CollectionViewCell {
+                    if cell.shouldShake {
+                        cell.superview?.bringSubview(toFront: cell)
+                        self.view.bringSubview(toFront: cell)
+                        cell.shakeUpTheCells()
+                        cell.shouldShake = false
+                        collectionView.reloadData()
+
+                    }
+                }
+            }
+        }
+    }
     
     func vibrateThePhone() {
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
+
+    func playTheSound() {
+        if let asset = NSDataAsset(name:"Awesome"){
+
+            do {
+
+                // Use NSDataAsset's data property to access the audio file stored in Sound.
+                let player = try AVAudioPlayer(data: asset.data)
+                // Play the above sound file.
+                player.volume = 1
+                player.delegate = self
+                player.prepareToPlay()
+                player.play()
+            } catch let error as NSError {
+                print(error.localizedDescription)
+            }
+        }
+    }
+
+    func play(for resource: String, type: String) {
+        // Prevent a crash in the event that the resource or type is invalid
+        //guard let path = Bundle.main.path(forResource: resource, ofType: type) else { return }
+        if let resourcePath = Bundle.main.resourcePath {
+            let audioName = "Awesome.m4a"
+            let path = resourcePath + "/" + audioName
+            let sound = URL(fileURLWithPath: path)
+            do {
+                let audioPlayer = try AVAudioPlayer(contentsOf: sound)
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            } catch {
+                // Create an assertion crash in the event that the app fails to play the sound
+                assert(false, error.localizedDescription)
+            }
+        }
+        // Convert path to URL for audio player
+
+
+    }
+
+
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print("play finished")
+
+        if !flag {
+            //recordingEnded(success: false)
+        } else {
+            //recordingEnded(success: true)
+        }
+    }
+    
     //MARK: Navigation
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
