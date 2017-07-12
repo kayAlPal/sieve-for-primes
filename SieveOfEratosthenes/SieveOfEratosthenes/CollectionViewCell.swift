@@ -202,7 +202,7 @@ class CollectionViewCell: UICollectionViewCell {
             node.size = size
             node.anchorPoint = CGPoint(x: 0, y: 1)
             node.zPosition = 100
-            node.name = "\(self.gameNumber?.value)"
+            node.name = "\(String(describing: self.gameNumber?.value))"
 
             node.position = CGPoint(x: self.frame.origin.x, y: self.frame.origin.y * 2.75)
             node.physicsBody = SKPhysicsBody(rectangleOf: size)
@@ -272,7 +272,7 @@ class CollectionViewCell: UICollectionViewCell {
     }
     func shakeUpTheCells() {
         if shouldShake {
-            print("Shakeable: \(gameNumber?.value)")
+            print("Shakeable: \(String(describing: gameNumber?.value))")
             self.contentView.didMoveToSuperview()
             self.contentView.shake()
             self.shouldShake = false

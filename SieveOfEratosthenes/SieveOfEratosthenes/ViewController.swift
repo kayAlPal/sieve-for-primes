@@ -334,7 +334,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     if cell.shouldShake {
                         
                         cells.append(cell)
-                        print("The cells game number is \(cell.gameNumber)")
+                        print("The cells game number is \(String(describing: cell.gameNumber))")
                     }
                 }
             }
@@ -422,7 +422,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         }
 
 
-        for i in 1...numberOfShakes {
+        for _ in 1...numberOfShakes {
             print("Add line to \(thisPoint)")
             print("Add line to \(thatPoint)")
             print("Cell is at \(frame.origin)")
@@ -540,7 +540,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 //            self.midPoint = midPoint
 //        }
 
-        print("The view controller says the midpoint is \(midPoint)")
+        print("The view controller says the midpoint is \(String(describing: midPoint))")
         let animationScene = AnimationScene(size: self.collectionView.bounds.size)
         //let animationScene = AnimationScene(size: CGSize(width: 2048, height: 1536))
         if let scaleMode = SKSceneScaleMode(rawValue: 1) {
@@ -579,7 +579,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func performSegueToUserTableViewController(_ alert: UIAlertAction! = nil) {
-        if let success = ourGC?.levelPassed {
+        if (ourGC?.levelPassed) != nil {
             if let size = sizeOfCollection {
                 sizeOfCollection = size + 100
             } else {

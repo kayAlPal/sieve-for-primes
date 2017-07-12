@@ -86,7 +86,7 @@ class UserTableViewController: UITableViewController {
             print("starting to the game")
             if let indexPath = self.tableView.indexPathForSelectedRow {
                 currentUser = theUsers[indexPath.row]
-                print(currentUser?.name)
+                print(currentUser?.name ?? "Current User has no name")
                 let destVC = segue.destination as? ViewController
                 destVC?.sizeOfCollection = currentUser?.sizeOfCollection
             }
@@ -130,7 +130,7 @@ class UserTableViewController: UITableViewController {
             if let thisUser = currentUser {
                 print("inside second")
                 thisUser.highestPrime = sourceViewController.highestPrime!
-                print("UTF thisUser.highestPrime \(thisUser.highestPrime)")
+                print("UTF thisUser.highestPrime \(String(describing: thisUser.highestPrime))")
                 thisUser.sizeOfCollection = sourceViewController.sizeOfCollection!
                 if let selectedIndexPath = tableView.indexPathForSelectedRow {
                     // Update an existing user.

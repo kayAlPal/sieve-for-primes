@@ -21,4 +21,15 @@ class TheLayout: UICollectionViewLayout {
             return size;
     }
 
+    override func layoutAttributesForInteractivelyMovingItem(at indexPath: IndexPath, withTargetPosition position: CGPoint) -> UICollectionViewLayoutAttributes {
+        var attributes = UICollectionViewLayoutAttributes()
+        attributes.frame = CGRect(x: 10, y: 10, width: 50, height: 70)
+        attributes.zIndex = 10
+        let path = CGPath(rect: CGRect(x: 10, y: 10, width: 50, height: 70), transform: nil)
+        attributes.isHidden =  true
+        
+        return attributes
+    }
+
+
 }

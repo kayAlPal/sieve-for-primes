@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A215075F1E3A77F50072F464 /* AnimationScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A215075E1E3A77F50072F464 /* AnimationScene.swift */; };
+		A21507651E3A7CB70072F464 /* Awesome.m4a in Resources */ = {isa = PBXBuildFile; fileRef = A21507641E3A7CB70072F464 /* Awesome.m4a */; };
+		A23EBFAE1E31607300CEE166 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23EBFAD1E31607300CEE166 /* PageViewController.swift */; };
 		A2EBAB421C5557CD0078BC0F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB3C1C5557CD0078BC0F /* AppDelegate.swift */; };
 		A2EBAB431C5557CD0078BC0F /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB3D1C5557CD0078BC0F /* CollectionViewCell.swift */; };
 		A2EBAB441C5557CD0078BC0F /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB3E1C5557CD0078BC0F /* GameController.swift */; };
@@ -16,7 +19,6 @@
 		A2EBAB4E1C55580F0078BC0F /* UserTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB481C55580F0078BC0F /* UserTableViewController.swift */; };
 		A2EBAB4F1C55580F0078BC0F /* UserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB491C55580F0078BC0F /* UserViewController.swift */; };
 		A2EBAB501C55580F0078BC0F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2EBAB4A1C55580F0078BC0F /* Assets.xcassets */; };
-		A2EBAB511C55580F0078BC0F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2EBAB4B1C55580F0078BC0F /* Info.plist */; };
 		A2EBAB521C55580F0078BC0F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB4C1C55580F0078BC0F /* User.swift */; };
 		A2EBAB531C55580F0078BC0F /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2EBAB4D1C55580F0078BC0F /* CustomTableViewCell.swift */; };
 		A2EBAB571C5558830078BC0F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2EBAB551C5558830078BC0F /* Info.plist */; };
@@ -43,6 +45,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A215075E1E3A77F50072F464 /* AnimationScene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnimationScene.swift; path = SieveOfEratosthenes/AnimationScene.swift; sourceTree = SOURCE_ROOT; };
+		A21507641E3A7CB70072F464 /* Awesome.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Awesome.m4a; sourceTree = SOURCE_ROOT; };
+		A23EBFAD1E31607300CEE166 /* PageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PageViewController.swift; path = SieveOfEratosthenes/PageViewController.swift; sourceTree = SOURCE_ROOT; };
 		A2A557A51BEBDC1F00538A2F /* SieveOfEratosthenes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SieveOfEratosthenes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A557B91BEBDC1F00538A2F /* SieveOfEratosthenes.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SieveOfEratosthenes.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2AA8A0B1C1CB86F003600ED /* SieveOfEratosthenes.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SieveOfEratosthenes.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +96,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A23EBFB11E36AF5700CEE166 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A21507641E3A7CB70072F464 /* Awesome.m4a */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		A2A5579C1BEBDC1F00538A2F = {
 			isa = PBXGroup;
 			children = (
@@ -114,12 +127,15 @@
 		A2A557A71BEBDC1F00538A2F /* SieveOfEratosthenes */ = {
 			isa = PBXGroup;
 			children = (
+				A215075E1E3A77F50072F464 /* AnimationScene.swift */,
 				A2EBAB5C1C55596E0078BC0F /* Main.storyboard */,
 				A2EBAB5E1C55596E0078BC0F /* LaunchScreen.storyboard */,
+				A23EBFB11E36AF5700CEE166 /* Resources */,
 				A2EBAB481C55580F0078BC0F /* UserTableViewController.swift */,
 				A2EBAB491C55580F0078BC0F /* UserViewController.swift */,
 				A2EBAB4A1C55580F0078BC0F /* Assets.xcassets */,
 				A2EBAB4B1C55580F0078BC0F /* Info.plist */,
+				A23EBFAD1E31607300CEE166 /* PageViewController.swift */,
 				A2EBAB4C1C55580F0078BC0F /* User.swift */,
 				A2EBAB4D1C55580F0078BC0F /* CustomTableViewCell.swift */,
 				A2EBAB3C1C5557CD0078BC0F /* AppDelegate.swift */,
@@ -222,6 +238,7 @@
 					A2A557A41BEBDC1F00538A2F = {
 						CreatedOnToolsVersion = 7.1;
 						DevelopmentTeam = X29FNL4HNM;
+						LastSwiftMigration = 0820;
 					};
 					A2A557B81BEBDC1F00538A2F = {
 						CreatedOnToolsVersion = 7.1;
@@ -262,9 +279,9 @@
 			files = (
 				A2EBAB501C55580F0078BC0F /* Assets.xcassets in Resources */,
 				A2EBAB601C55596E0078BC0F /* Main.storyboard in Resources */,
+				A21507651E3A7CB70072F464 /* Awesome.m4a in Resources */,
 				A2EBAB5B1C55589F0078BC0F /* Info.plist in Resources */,
 				A2EBAB611C55596E0078BC0F /* LaunchScreen.storyboard in Resources */,
-				A2EBAB511C55580F0078BC0F /* Info.plist in Resources */,
 				A2EBAB571C5558830078BC0F /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -292,8 +309,10 @@
 			files = (
 				A2EBAB421C5557CD0078BC0F /* AppDelegate.swift in Sources */,
 				A2EBAB451C5557CD0078BC0F /* GameNumber.swift in Sources */,
+				A23EBFAE1E31607300CEE166 /* PageViewController.swift in Sources */,
 				A2EBAB531C55580F0078BC0F /* CustomTableViewCell.swift in Sources */,
 				A2EBAB4E1C55580F0078BC0F /* UserTableViewController.swift in Sources */,
+				A215075F1E3A77F50072F464 /* AnimationScene.swift in Sources */,
 				A2EBAB431C5557CD0078BC0F /* CollectionViewCell.swift in Sources */,
 				A2EBAB4F1C55580F0078BC0F /* UserViewController.swift in Sources */,
 				A2EBAB521C55580F0078BC0F /* User.swift in Sources */,
@@ -438,9 +457,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SieveOfEratosthenes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.SieveOfEratosthenes;
 				PRODUCT_NAME = SieveOfEratosthenes;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -449,9 +470,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SieveOfEratosthenes/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.SieveOfEratosthenes;
 				PRODUCT_NAME = SieveOfEratosthenes;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

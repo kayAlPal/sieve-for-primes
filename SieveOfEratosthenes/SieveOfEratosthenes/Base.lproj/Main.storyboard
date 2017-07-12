@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="9Ox-Hn-RFZ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="f4b-Tr-pR2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="122"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HbS-bf-dS3" id="VGz-1L-4ka">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="121"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="122"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player Name" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6o3-SM-LEi">
@@ -296,6 +296,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kAP-bb-Rtm" customClass="SKView">
+                                <rect key="frame" x="16" y="0.0" width="343" height="667"/>
+                                <color key="backgroundColor" red="1" green="0.75641226399999995" blue="0.01176470588" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="YMf-wG-lpR">
                                 <rect key="frame" x="16" y="0.0" width="343" height="667"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -342,9 +346,13 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="YMf-wG-lpR" secondAttribute="trailing" id="H7Z-Gr-bBa"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="kAP-bb-Rtm" secondAttribute="bottom" constant="20" id="Id7-f8-OsU"/>
                             <constraint firstItem="YMf-wG-lpR" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="L3G-0e-CfT"/>
                             <constraint firstItem="YMf-wG-lpR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Okn-Py-bSc"/>
+                            <constraint firstItem="kAP-bb-Rtm" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="QTH-DD-MW1"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="YMf-wG-lpR" secondAttribute="bottom" id="RiE-oZ-jo9"/>
+                            <constraint firstItem="kAP-bb-Rtm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="20" id="dww-aY-6ro"/>
+                            <constraint firstAttribute="trailing" secondItem="kAP-bb-Rtm" secondAttribute="trailing" constant="20" id="f4f-8u-BcM"/>
                         </constraints>
                     </view>
                     <toolbarItems>
@@ -356,6 +364,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="animationView" destination="kAP-bb-Rtm" id="kTJ-ED-GyV"/>
                         <outlet property="collectionView" destination="YMf-wG-lpR" id="Dzn-0K-bI7"/>
                         <segue destination="f4b-Tr-pR2" kind="show" identifier="Finish" id="3Hn-Ju-eFV"/>
                         <segue destination="bsx-dQ-s4A" kind="unwind" identifier="UnwindToFinish" unwindAction="unwindToFinish:" id="lBQ-bg-E3n"/>
@@ -1078,7 +1087,7 @@
         <image name="defaultPhoto" width="445" height="800"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="3Hn-Ju-eFV"/>
         <segue reference="qrs-HJ-znt"/>
-        <segue reference="fKU-04-kWG"/>
     </inferredMetricsTieBreakers>
 </document>

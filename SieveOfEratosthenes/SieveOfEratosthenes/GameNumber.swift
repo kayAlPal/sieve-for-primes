@@ -16,6 +16,7 @@ enum GameNumberState {
     case normal //white
     case selectedPrime //yellow, primes found by user
     case selectedComposite //red, composites found by user are red
+    case shaker
     case removed //gray, removed composites after user finds all composites in 
     case unit
    
